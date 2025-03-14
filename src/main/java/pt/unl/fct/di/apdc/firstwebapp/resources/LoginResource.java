@@ -55,10 +55,12 @@ public class LoginResource {
     @GET
     @Path("/{username}")
     public Response checkUsernameAvailable(@PathParam("username") String username) {
-		if(username.trim().equals("hj"))
-        	return Response.ok().entity(g.toJson(false)).build();
-        else
+		if(username.trim().equals("hj")) {
+            return Response.ok().entity(g.toJson(false)).build();
+        }
+        else {
             return Response.ok().entity(g.toJson(true)).build();
+        }
     }
 
 }
