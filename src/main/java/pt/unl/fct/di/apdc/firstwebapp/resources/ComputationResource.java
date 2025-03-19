@@ -56,8 +56,8 @@ public class ComputationResource {
 	@GET
 	@Path("/compute")
 	public Response triggerExecuteComputeTask() throws IOException {
-		String projectId = "quantum-shard-415522";
-		String queueName = "Default";
+		String projectId = "adc-202425";
+		String queueName = "FirstQueue";
 		String location = "europe-west6";
 		LOG.log(Level.INFO, projectId + " :: " + queueName + " :: " + location );
 
@@ -70,6 +70,19 @@ public class ComputationResource {
 			
 			client.createTask(queuePath, taskBuilder.build());
 		} 
+		return Response.ok().build();
+	}
+	@GET
+	@Path("/compute")
+	public Response executeComputeTask() {
+		LOG.fine("Starting to execute computation taks");
+		try {
+			Thread.sleep(60*1000*10); //10 min...
+		} catch (Exception e) {
+			LOG.logp(Level.SEVERE, this.getClass().getCanonicalName(),
+					"executeComputeTask", "An exception has ocurred", e);
+			return Response.serverError().build();
+		} //Simulates 60s execution
 		return Response.ok().build();
 	}
 }
