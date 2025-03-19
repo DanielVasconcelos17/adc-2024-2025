@@ -47,7 +47,7 @@ public class LoginResource {
             return Response.ok(g.toJson(at)).build();
         }
         return Response
-                .status(Response.Status.FORBIDDEN)
+                .status(Status.FORBIDDEN)
                 .entity("Incorrect Username or password")
                 .build();
     }
