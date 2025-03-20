@@ -48,7 +48,6 @@ public class ComputationResource {
 	@GET
 	@Path("/time")
 	public Response getCurrentTime() {
-
 		LOG.fine("Replying to date request.");
 		return Response.ok().entity(g.toJson(fmt.format(new Date()))).build();
 	}
@@ -72,7 +71,10 @@ public class ComputationResource {
 		} 
 		return Response.ok().build();
 	}
-	@GET
+
+
+
+	/*@GET
 	@Path("/compute")
 	public Response executeComputeTask() {
 		LOG.fine("Starting to execute computation taks");
@@ -84,5 +86,5 @@ public class ComputationResource {
 			return Response.serverError().build();
 		} //Simulates 60s execution
 		return Response.ok().build();
-	}
+	}*/
 }
