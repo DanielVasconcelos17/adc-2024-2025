@@ -42,11 +42,18 @@ public class RegisterResource {
         LOG.fine("Attempt to register user: " + data.username);
 
         Key userKey = datastore.newKeyFactory().setKind("User").newKey(data.username);
-        Entity user = Entity.newBuilder(userKey)
+        Entity user = datastore.get(userKey);
+        if(user != null)
+            return Response.status(Status.BAD_REQUEST)
+                    .entity("User Already Exists !")
+                    .build();
+
+        Entity entity = Entity.newBuilder(userKey)
                 .set("user_pwd", DigestUtils.sha512Hex(data.password))
                 .set("user_creation_time", Timestamp.now())
                 .build();
-        datastore.put(user);
+
+        datastore.put(entity);
         LOG.info("User registered " + data.username);
         return Response.ok().entity(g.toJson(true)).build();
     }
@@ -79,10 +86,12 @@ public class RegisterResource {
         datastore.put(user);
         LOG.info("User registered " + data.username);
 
-
         return Response.ok().build();
     }
 
+    /*
+        This is the ideal way to register a user
+     */
     @POST
     @Path("/v3")
     @Consumes(MediaType.APPLICATION_JSON)
